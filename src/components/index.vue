@@ -41,6 +41,7 @@ export default {
      Titre:'Vue Js Component',
      About:'A-propos',
      About_desc:'Une breve description de moi',
+     Contact:'Un Contact'
 
    }
  }

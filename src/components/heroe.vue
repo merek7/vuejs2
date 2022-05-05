@@ -6,14 +6,14 @@
         <p class="lead text-muted">{{ alt }}</p>
          <img
           v-bind:src="picture"
-          :alt="`${User} ${Prenom}`"
+          :alt="`${Nom} ${Prenom}`"
           :class="gender"
         /> 
         <h1>{{ Nom }} {{ Prenom }}</h1>
-        <h3>Email: {{ email }}</h3>
-        <button class="male me-2">Genere un homme</button>
+        <h3>Email: {{ Email }}</h3>
+        <button id="male" class="male me-2" @click="getMale()">Genere un homme</button>
 
-        <button class="female">generer une femme</button>
+        <button id="female" class="female" @click="getFemale()">generer une femme</button>
         <p>
           <!-- <a href="#" class="btn btn-primary my-2">Main call to action</a>
           <a href="#" class="btn btn-secondary my-2">Secondary action</a> -->
@@ -28,17 +28,49 @@ export default {
   data() {
     return {
       sub: "Attribute Binding",
-      alt: "Humain generer dynamiquement",
-      Nom: 'User',
-      Prenom:'Test',
-      Email: 'Te',
-      picture:'https://randomuser.me/api/portraits/men/10.jpg'
+      alt: "Profil généré dynamiquement",
+      Nom: 'nom',
+      Prenom:'prenom',
+      gender:'',
+      Email: 'Email@email.mail',
+      picture:'https://via.placeholder.com/128'
     };
   },
+  methods:
+  {
+    async getMale()
+    {
+      const res= await fetch('https://randomuser.me/api?gender=male')
+      const {results} = await res.json()
+      this.Nom=results[0].name.first
+      this.Prenom=results[0].name.last
+      this.gender=results[0].gender
+      this.Email=results[0].email
+      this.picture=results[0].picture.large
+
+    },
+    async getFemale()
+    {
+      const res= await fetch('https://randomuser.me/api?gender=female')
+      const {results} = await res.json()
+      this.Nom=results[0].name.first
+      this.Prenom=results[0].name.last
+      this.gender=results[0].gender
+      this.Email=results[0].email
+      this.picture=results[0].picture.large
+
+    }
+  }
 };
 </script>
 
 <style scoped>
+img
+{
+  border-radius: 50%;
+  border: 5px #333 solid;
+  margin-bottom: 1rem;
+}
 .male {
   border-color: steelblue;
   background-color: steelblue;
